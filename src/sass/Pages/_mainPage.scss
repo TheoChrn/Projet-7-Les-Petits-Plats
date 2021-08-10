@@ -1,0 +1,21 @@
+li, ul {
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+#container{
+ margin: 2% 10%;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+main{
+  margin-top: 2em;
+}
+
+
