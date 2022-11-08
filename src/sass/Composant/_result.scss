@@ -1,0 +1,60 @@
+.results-container {
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  gap: 10px;
+  margin: 15px 0;
+
+  & .results {
+    position: relative;
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+
+    & .cross {
+      position: absolute;
+      background-image: url("../../src/public/assets/images/Vector.svg");
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 10px;
+      color: black;
+    }
+
+    & .result {
+      align-self: center;
+    }
+
+    &--ingredient {
+      background-color: $ingredientBackgroundColor;
+    }
+
+    &--appliance {
+      background-color: $applianceBackgroundColor;
+    }
+
+    &--ustensil {
+      background-color: $ustensilBackgroundColor;
+    }
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .results-container {
+    grid-template-columns: repeat(1, auto);
+  }
+}
+
+@media screen and (min-width: 611px) and (max-width: 1039px) {
+  .results-container {
+    grid-template-columns: repeat(3, auto);
+  }
+}
+
+@media screen and (min-width: 1040px) and (max-width: 1440px) {
+  .results-container {
+    grid-template-columns: repeat(6, auto);
+  }
+}

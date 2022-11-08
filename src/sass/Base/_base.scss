@@ -1,0 +1,47 @@
+*:where(:not(iframe, canvas, img, svg, video, input):not(svg *)) {
+  all: unset;
+  display: revert;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}
+
+.card-text, ::placeholder, .card-title, .card-ingredient{
+  font-weight: 400;
+}
+
+.bold, .targetedSearchInput{
+  font-weight: 700;
+}
+
+li,
+ul,
+ol {
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  margin: 2% 10%;
+}
+
+main {
+  margin-top: 2em;
+}
+
+figure {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}

@@ -1,9 +1,21 @@
 .btn-link{
   height: auto;
   width: 50px;
-  background-color: blue;
+  background-image: url('../../src/public/assets/images/Loop.svg');
+  background-repeat: no-repeat;
+  background-position: center;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
+}
+
+.cross{
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  .btn-link{
+    display: none;
+  }
 }

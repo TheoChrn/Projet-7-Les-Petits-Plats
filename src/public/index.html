@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,28 +11,40 @@
   <script src="../js/main.js" defer></script>
   <title>Document</title>
 </head>
+
 <body>
   <div id="container">
     <header>
+      <h1 style="display: none;">Les petits plats</h1>
       <figure class="logoContainer">
         <img src="./assets/images/logo.svg" class="logo" alt="Les petits plats">
       </figure>
       <nav class="search-box">
-        <form action="" id="searchFrom" class="search-form">
-          <input type="text" class="form-control">
-          <button class="btn btn-link search-btn">
-            <!--METTRE ICONE DE LOUPE-->
-          </button>
+        <form action="#" id="searchFrom" class="search-form">
+          <input type="text" id="searchBar" class="form-control" placeholder="Rechercher un ingrédient, appareil, ustensile ou une recette...">
+          <button class="btn btn-link search-btn"></button>
         </form>
-        <div class="btn-group">
-          <div class="dropdown">
-            <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown button
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <div class="results-container" id="results-container"></div>
+        <div class="searchButtons">
+          <div id="menuIngredients" class="dropdownMenu dropdownMenu--ingredients">
+            <span class="rafter"></span>
+            <button class="bouton">Ingrédients</button>
+            <input type="text" class="targetedSearchInput" placeholder="Rechercher un ingrédient..." id="searchIngredient">
+            <ul id="ingredientsList" class="dropdownList">
+            </ul>
+          </div>
+          <div id="menuAppliances" class="dropdownMenu dropdownMenu--appliances">
+            <span class="rafter"></span>
+            <button class="bouton">Appareils</button>
+            <input type="text" class="targetedSearchInput" placeholder="Rechercher un appareil..." id="searchAppliance">
+            <ul id="appliancesList" class="dropdownList">
+            </ul>
+          </div>
+          <div id="menuUstensils" class="dropdownMenu dropdownMenu--ustensils">
+            <span class="rafter"></span>
+            <button class="bouton">Ustensiles</button>
+            <input type="text" class="targetedSearchInput" placeholder="Rechercher un ustensil..." id="searchUstensils">
+            <ul id="ustensilsList" class="dropdownList">
             </ul>
           </div>
         </div>
@@ -39,10 +52,8 @@
     </header>
     <main>
       <section id="recipes" class="grid">
-        
+        <h2 style="display: none;">Recettes</h2>
       </section>
     </main>
   </div>
 </body>
-
-</html>
