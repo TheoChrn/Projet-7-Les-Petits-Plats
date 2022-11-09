@@ -8,6 +8,7 @@ getData().then(res => {
 
   // DOM
   const dropDownButton = document.querySelectorAll('.rafter')
+  const dropDowns = document.querySelectorAll('.dropdownMenu')
   const searchBar = document.getElementById('searchBar')
   const searchIngredientInput = document.getElementById('searchIngredient')
   const searchApplianceInput = document.getElementById('searchAppliance')
