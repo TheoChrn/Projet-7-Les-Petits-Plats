@@ -337,15 +337,4 @@ getData().then(res => {
     })
   }
   deleteTag()
-
-  /*let times = []
-  for (let i = 0; i < 50; i++) {
-    const start = window.performance.now()
-    filterArray({
-      value: 'Salade'
-    }) 
-    const end = window.performance.now()
-    times.push(end - start)
-  }
-  console.log(times.reduce((a, b) => a + b)/ times.length)*/
 })
