@@ -1,3 +1,20 @@
 .search-form{
   position: relative;
+  height: 70px;
+
+  & .form-control{
+    height: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: $inputBackgroundColor;
+  }
+
+  & input {
+    margin: 20px 0;
+    padding: 25px;
+   
+    &::placeholder{
+      font-size: 18px;
+    }
+  }
 }
