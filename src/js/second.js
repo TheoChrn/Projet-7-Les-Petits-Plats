@@ -57,10 +57,8 @@ getData().then(res => {
     // Vider le conteneur
     container.innerHTML = ''
 
-    // Pour chaque recette
     recipe.forEach(r => {
 
-      // Injecter le code HTML
       container.innerHTML +=
         `
   <article class="card" data-recipeId="${r.id}"style="width: 100%;">
@@ -83,65 +81,24 @@ getData().then(res => {
     })
   }
 
-  // Filtre les recettes en fonction des tags en place
-  const tagFilter = () => {
-
-    // Vider le conteneur
-    recipesContainer.innerHTML = ''
-
-    // Pour chaque tag
-    stockTag.forEach(tag => {
-
-      // Filtrer le tableau
-      filteredData = filteredData.filter(r => { 
-
-        // Trouver le tag égal à l'ingredient
-        const ingredientsMatches = r.ingredients.some(i => tag === i.ingredient)
-
-        // Trouver le tag égal à l'appareil
-        const applianceMatches = r.appliance === tag
-
-        // Trouver le tag égal à l'ustensil
-        const ustensilsMatches = r.ustensils.some(u => tag === u)
-
-        // Retourner les recettes
-        return ingredientsMatches || applianceMatches || ustensilsMatches
-      })
-    })
-
-    // Actualiser le DOM
-    setDropDowns(filteredData)
-    injectNewRecipes(recipesContainer, filteredData)
-  }
-
   // Injecter les ingrédients, appareils, ustentils dans le DOM
   const setIngredientsAppliancesUstensils = () => {
 
-    // Pour chaque ingredient
     ingredientsSet.forEach(i => {
 
-      // Si le tableau n'include pas l'ingrédient
       if (!stockTag.includes(i)) {
-
-        // Injecte la li correspondante dans la ul
         ingredientsList.innerHTML += `<li class="menuListItems" data-ingredient="${i}">${i}</li>`
       }
     })
 
-    // Pour chaque appareil
     appliancesSet.forEach(a => {
-      // Si le tableau n'include pas l'appareil
       if (!stockTag.includes(a)) {
-        // Injecte la li correspondante dans la ul
         appliancesList.innerHTML += `<li class="menuListItems" data-appliance="${a}">${a}</li>`
       }
     })
 
-    // Pour chaque ingredient
     ustensilsSet.forEach(u => {
-      // Si le tableau n'include pas l'ustensil
       if (!stockTag.includes(u)) {
-        // Injecte la li correspondante dans la ul
         ustensilsList.innerHTML += `<li class="menuListItems" data-ustensil="${u}">${u}</li>`
       }
     })
@@ -203,6 +160,7 @@ getData().then(res => {
     
   }
 
+  // Filtrer les recettes si la valeur de l'input match le regex
   const getResultsFromSearch = () => {
     // Vide le conteneur
     recipesContainer.innerHTML = ''
@@ -211,33 +169,21 @@ getData().then(res => {
     const regex = new RegExp(`(.*?)${searchStr}(.*\s?)`)
     let ids = []
 
-    // Pour chaque recette dans le tableau
     for(const recipe of filteredData) {
-
-      // Si
+      // Si les valeurs ne match pas le regex
       if (
-      // Le nom ne match pas le regex et
       !recipe.name.removeDiacritics().match(regex) && 
-
-      // L' ingrédient ne match pas le regex et
       !recipe.ingredients.some(i => i.ingredient.removeDiacritics().match(regex)) &&
-
-      // L' ustensil ne match pas le regex et
       !recipe.ustensils.some(u => u.removeDiacritics().match(regex)) && 
-
-      // L'appareil ne match pas le regex et
       !recipe.appliance.removeDiacritics().match(regex) &&
-
-      // La description ne match pas le regex 
       !recipe.description.removeDiacritics().match(regex)
 
       ) {
-        // Met l'id de cette recette dans le tableau "ids"
         ids.push(recipe.id)
       }
     }
 
-    // Retire dans filteredData toutes les recettes dont l'id est contenu dans "ids"
+    // Retirer les recettes du tableau qui sont inclus dans "ids"
     filteredData = filteredData.filter(r => !ids.includes(r.id))
 
     // Actualise le DOM
@@ -248,21 +194,32 @@ getData().then(res => {
     addTag()
   }
 
-  // Fonction de recherche des composants
-  const searchIngredientApplianceUstensil = (input, array, result) => {
-    const searchBar = input.value.removeDiacritics()
-    const regex = new RegExp(`(.*?)${searchBar}(.*\s?)`)
+  // Filtre les recettes en fonction des tags en place
+  const tagFilter = () => {
 
-    // Pour chaque element du tableau
-    array.forEach(i => {
+    // Vider le conteneur
+    recipesContainer.innerHTML = ''
 
-      // Si l'élément match le regex
-      if (i.removeDiacritics().match(regex)) {
+    stockTag.forEach(tag => {
 
-        // Met le dans le nouveau tableau
-        result.push(i)
-      }
+      filteredData = filteredData.filter(r => { 
+
+        // Trouver le tag égal à l'ingredient
+        const ingredientsMatches = r.ingredients.some(i => tag === i.ingredient)
+
+        // Trouver le tag égal à l'appareil
+        const applianceMatches = r.appliance === tag
+
+        // Trouver le tag égal à l'ustensil
+        const ustensilsMatches = r.ustensils.some(u => tag === u)
+
+        return ingredientsMatches || applianceMatches || ustensilsMatches
+      })
     })
+
+    // Actualiser le DOM
+    setDropDowns(filteredData)
+    injectNewRecipes(recipesContainer, filteredData)
   }
   
   const filterArray = (input) => {
@@ -297,6 +254,22 @@ getData().then(res => {
     setTimeOutFunction()
   })
 
+  // Fonction de recherche des composants
+  const searchIngredientApplianceUstensil = (input, array, result) => {
+    const searchBar = input.value.removeDiacritics()
+    const regex = new RegExp(`(.*?)${searchBar}(.*\s?)`)
+
+    // Pour chaque élément dans le tableau Set()
+    array.forEach(i => {
+
+      if (i.removeDiacritics().match(regex)) {
+
+        result.push(i)
+      }
+    })
+  }
+
+  // Filtre la recherche selon la valeur dans la barre d'ingrédients
   searchIngredientInput.addEventListener('input', (e) => {
     e.preventDefault()
     stockRecipeFromSearch = []
@@ -311,6 +284,7 @@ getData().then(res => {
     addTag()
   })
 
+  // Filtre la recherche selon la valeur dans la barre d'appareils
   searchApplianceInput.addEventListener('input', (e) => {
     e.preventDefault()
     stockRecipeFromSearch = []
@@ -325,6 +299,7 @@ getData().then(res => {
     addTag()
   })
 
+  // Filtre la recherche selon la valeur dans la barre d'ustensils
   searchUstensilsInput.addEventListener('input', (e) => {
     e.preventDefault()
     stockRecipeFromSearch = []
