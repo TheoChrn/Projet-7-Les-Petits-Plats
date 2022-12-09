@@ -56,10 +56,8 @@ getData().then(res => {
     // Vider le conteneur
     container.innerHTML = ''
 
-    // Pour chaque recette
     recipe.forEach(r => {
 
-      // Injecter le code HTML
       container.innerHTML +=
         `
   <article class="card" data-recipeId="${r.id}"style="width: 100%;">
@@ -82,47 +80,13 @@ getData().then(res => {
     })
   }
 
- // Filtre les recettes en fonction des tags en place
- const tagFilter = () => {
-
-  // Vider le conteneur
-  recipesContainer.innerHTML = ''
-
-  // Pour chaque tag
-  stockTag.forEach(tag => {
-
-    // Filtrer le tableau
-    filteredData = filteredData.filter(r => { 
-
-      // Trouver le tag égal à l'ingredient
-      const ingredientsMatches = r.ingredients.some(i => tag === i.ingredient)
-
-      // Trouver le tag égal à l'appareil
-      const applianceMatches = r.appliance === tag
-
-      // Trouver le tag égal à l'ustensil
-      const ustensilsMatches = r.ustensils.some(u => tag === u)
-
-      // Retourner les recettes
-      return ingredientsMatches || applianceMatches || ustensilsMatches
-    })
-  })
-
-  // Actualiser le DOM
-  setDropDowns(filteredData)
-  injectNewRecipes(recipesContainer, filteredData)
-}
-
   // Injecter les ingrédients, appareils, ustentils dans le DOM
   const setIngredientsAppliancesUstensils = () => {
 
-    // Pour chaque ingredient
     ingredientsSet.forEach(i => {
 
-      // Si le tableau n'include pas l'ingrédient
       if (!stockTag.includes(i)) {
 
-        // Injecte la li correspondante dans la ul
         ingredientsList.innerHTML += `<li class="menuListItems" data-ingredient="${i}">${i}</li>`
       }
     })
@@ -175,9 +139,11 @@ getData().then(res => {
         ustensilsSet.add(u)
       })
 
+      // Injecte les élement dans le dom
       setIngredientsAppliancesUstensils()
 
     } else {
+      // Renvoit une erreur
       ingredientsList.innerHTML = ''
       appliancesList.innerHTML = ''
       ustensilsList.innerHTML = ''
@@ -192,6 +158,35 @@ getData().then(res => {
     }
   }
 
+  // Filtre les recettes en fonction des tags en place
+ const tagFilter = () => {
+
+  // Vider le conteneur
+  recipesContainer.innerHTML = ''
+
+  stockTag.forEach(tag => {
+
+
+    filteredData = filteredData.filter(r => { 
+
+      // Trouver le tag égal à l'ingredient
+      const ingredientsMatches = r.ingredients.some(i => tag === i.ingredient)
+
+      // Trouver le tag égal à l'appareil
+      const applianceMatches = r.appliance === tag
+
+      // Trouver le tag égal à l'ustensil
+      const ustensilsMatches = r.ustensils.some(u => tag === u)
+
+      return ingredientsMatches || applianceMatches || ustensilsMatches
+    })
+  })
+
+  // Actualiser le DOM
+  setDropDowns(filteredData)
+  injectNewRecipes(recipesContainer, filteredData)
+}
+
   // Filtre les recettes selon ce qui est écrit dans la barre de recherche principale
   const getResultsFromSearch = () => {
     const input = searchBar
@@ -205,16 +200,21 @@ getData().then(res => {
       const ingredientsMatches = r.ingredients.some(i => i.ingredient.removeDiacritics().includes(searchStr))
       return nameMatches || descriptionMatches || ustensilsMatches || applianceMatches || ingredientsMatches
     })
+
+    // Mise à jour du DOM
     injectNewRecipes(recipesContainer, filteredData)
     setDropDowns(filteredData)
   }
 
   const filterArray = (input) => {
     filteredData = recipes
+    // Si la valeur du champs est égal à 0 et qu'aucun tag n'est renseigné ou 
+    // la valeur du champs est inférieur ou égale à 2 et qu'aucun tag n'est renseigné
     if (input.value.trim().length === 0 && stockTag.length === 0 || input.value.trim().length <= 2 && stockTag.length === 0 || input.value.trim <= 2 && stockTag.length !== 0) {
       setDropDowns(filteredData)
       injectNewRecipes(recipesContainer, filteredData)
 
+      // Si il y a au moins un tag renseigné et qu'il reste des recettes dans le tableau
     } else if (stockTag.length !== 0 && filteredData.length !== 0) {
       tagFilter()
       getResultsFromSearch()
@@ -225,8 +225,8 @@ getData().then(res => {
     addTag()
   }
 
-  // Au clique sur la loupe, lance la recherche
-  searchBtn.addEventListener('click', (e) => {
+   // Au clique sur la loupe, lance la recherche
+   searchBtn.addEventListener('click', (e) => {
     e.preventDefault()
     setTimeOutFunction()
   })
@@ -288,7 +288,7 @@ getData().then(res => {
     addTag()
   })
 
-  // Ajoute un tag
+  // Ajoute un tag dans le DOM et le tableau
   const addTag = () => {
     let listItems = document.querySelectorAll('.menuListItems')
     listItems.forEach(i => {
